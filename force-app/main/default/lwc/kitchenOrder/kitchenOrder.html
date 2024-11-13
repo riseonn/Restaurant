@@ -1,0 +1,17 @@
+<template>
+    <lightning-card title="Kitchen Order Management">
+        <div class="slds-p-horizontal_medium">
+            <lightning-input label="Order Number" name="orderNumber" value={orderNumber} onchange={handleInputChange}></lightning-input>
+            <lightning-combobox label="Order Status" name="orderStatus" value={orderStatus} options={statusOptions} onchange={handleInputChange}></lightning-combobox>
+            <lightning-button variant="brand" label="Create Order" onclick={handleOrderCreation}></lightning-button>
+        </div>
+
+        <template if:true={orders}>
+            <lightning-datatable
+                data={orders}
+                columns={columns}
+                key-field="Id">
+            </lightning-datatable>
+        </template>
+    </lightning-card>
+</template>

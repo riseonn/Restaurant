@@ -1,0 +1,28 @@
+<template>
+    <lightning-card title="Menu" icon-name="standard:menu">
+        <div class="menu-container">
+            <!-- Display a loading spinner while fetching the data -->
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </template>
+
+            <!-- Display menu items once data is fetched -->
+            <template if:true={menuItems}>
+                <div class="menu-items">
+                    <template for:each={menuItems} for:item="item">
+                        <div key={item.Id} class="menu-item">
+                            <lightning-card>
+                                <img src={item.Image_URL__c} alt={item.Name} class="menu-item-image"/>
+                                <div class="menu-item-details">
+                                    <h3>{item.Name}</h3>
+                                    <p>{item.Description__c}</p>
+                                    <p class="menu-item-price">${item.Price__c}</p>
+                                </div>
+                            </lightning-card>
+                        </div>
+                    </template>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

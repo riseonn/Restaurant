@@ -1,0 +1,30 @@
+.menu-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.menu-item {
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 1px solid #d8dde6;
+    border-radius: 0.25rem;
+}
+
+.menu-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.menu-item h3 {
+    color: #16325c;
+}
+
+.menu-item p {
+    color: #54698d;
+}
+
+.menu-item .price {
+    font-weight: bold;
+    color: #16325c;
+}
