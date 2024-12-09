@@ -1,0 +1,212 @@
+<template>
+    <lightning-card title="Order Management System">
+        <lightning-datatable
+            key-field="Id"
+            data={data}
+            columns={columns}
+            onrowaction={handleRowAction}
+        ></lightning-datatable>
+        
+        <!-- Edit Modal -->
+        <template if:true={isEditModalOpen}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 class="slds-text-heading_medium slds-hyphenate">Edit Order</h2>
+                        <button 
+                            class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverted" 
+                            title="Close" 
+                            onclick={handleModalClose}
+                        >
+                            <lightning-icon 
+                                icon-name="utility:close" 
+                                alternative-text="Close" 
+                                variant="inverse"
+                                size="small"
+                            ></lightning-icon>
+                        </button>
+                    </header>
+                    
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <lightning-input 
+                            name="firstName"
+                            label="First Name" 
+                            value={currentOrder.First_Name__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="middleName"
+                            label="Middle Name" 
+                            value={currentOrder.Middle_Name__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="lastName"
+                            label="Last Name" 
+                            value={currentOrder.Last_Name__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="mobile"
+                            label="Mobile" 
+                            value={currentOrder.Mobile__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="email"
+                            label="Email" 
+                            value={currentOrder.Email__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="status"
+                            label="Status" 
+                            value={currentOrder.Status__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="token"
+                            label="Token" 
+                            value={currentOrder.Token__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="createdBy"
+                            label="Created By" 
+                            value={currentOrder.CreatedById}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="createdAt"
+                            label="Created At" 
+                            value={currentOrder.Created_At__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="updatedAt"
+                            label="Updated At" 
+                            value={currentOrder.Updated_At__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="ownerId"
+                            label="Owner ID" 
+                            value={currentOrder.OwnerId}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="vendorId"
+                            label="Vendor ID" 
+                            value={currentOrder.Vendor_Id__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="userId"
+                            label="User ID" 
+                            value={currentOrder.User_Id__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="shippingAddress"
+                            label="Shipping Address" 
+                            value={currentOrder.Shipping__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="address1"
+                            label="Address 1" 
+                            value={currentOrder.Line_1__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="address2"
+                            label="Address 2" 
+                            value={currentOrder.Line_2__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="city"
+                            label="City" 
+                            value={currentOrder.City__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="province"
+                            label="Province" 
+                            value={currentOrder.Province__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="country"
+                            label="Country" 
+                            value={currentOrder.Country__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="subTotal"
+                            label="Sub Total" 
+                            value={currentOrder.Sub_Total__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="total"
+                            label="Total" 
+                            value={currentOrder.Total__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="discount"
+                            label="Discount" 
+                            value={currentOrder.Discount__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="promo"
+                            label="Promo" 
+                            value={currentOrder.Promo__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="itemDiscount"
+                            label="Item Discount" 
+                            value={currentOrder.Item_Discount__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="content"
+                            label="Content" 
+                            value={currentOrder.Content__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="tax"
+                            label="Tax" 
+                            value={currentOrder.Tax__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="grandTotal"
+                            label="Grand Total" 
+                            value={currentOrder.Grand_Total__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                    </div>
+                    
+                    <footer class="slds-modal__footer">
+                        <lightning-button 
+                            variant="neutral" 
+                            label="Cancel" 
+                            onclick={handleModalClose}
+                        ></lightning-button>
+                        <lightning-button 
+                            variant="brand" 
+                            label="Save" 
+                            onclick={handleSaveOrder}
+                        ></lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+    </lightning-card>
+</template>

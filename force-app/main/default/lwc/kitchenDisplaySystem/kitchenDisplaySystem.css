@@ -1,0 +1,181 @@
+.custom-left-margin {
+    margin-left: 20px; /* Adjust the value as needed */
+}
+
+.card-section {
+    display: flex;
+    justify-content: space-between; /* Ensure elements are spaced out properly */
+    align-items: center; /* Align items vertically centered */
+}
+
+/*
+.search-wrapper {
+    flex: 1; 
+}
+*/
+.borderR25
+{
+    border-radius:25px !important;
+}
+.icon-container {
+    display: flex;
+    gap: 300px; /* Adds space between the icons */
+    align-items: center; /* Align icons vertically centered */
+}
+
+/* Additional styling for the icons and search bar */
+.search-input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-left: 20px;
+}
+
+
+.RB1-left-margin {
+    margin-left: 180px; /* Adjust the value as needed */
+}
+
+.LBL1-left-margin {
+    margin-left: 390px; /* Adjust the value as needed */
+    background-color: #ffffff;
+   
+}
+
+.LBL2-left-margin {
+    margin-left: 160px; /* Adjust the value as needed */
+    background-color: #ffffff;
+
+}
+
+.LBL3-left-margin {
+    margin-left: 170px; /* Adjust the value as needed */
+    background-color: #ffffff;
+
+}
+
+.LBL4-left-margin {
+    margin-left: 180px; /* Adjust the value as needed */
+    background-color: #ffffff;
+
+}
+
+.round-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #0070d2;
+    /* or any color you like */
+    color: white;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.myButtonClass {
+
+    --slds-c-background: #f0f0f0ae;
+    /* Set your desired background color here */
+
+}
+
+.resizeable-container {
+    display: flex;               /* Use flexbox for the container */
+    justify-content: space-between; /* Optional: Add space between the items */
+    gap: 10px;                   /* Optional: Space between items */
+    background-color: #2d3169ae;
+    height: 350px;
+}
+
+.resizeable-item1 {
+    background: 
+        linear-gradient(to bottom, #3bab2f 55%, #ffffff 55%);
+    padding: 10px;
+    width: 260px;
+    text-align: center;
+    height: 330px;
+    overflow: auto;
+    margin-left: 20px;
+    margin-top: 15px;
+}
+
+.resizeable-item2 {
+    background: 
+    linear-gradient(to bottom, #169cc1 55%, #ffffff 55%);  /* Optional: background color for the divs */
+    padding: 10px;               /* Optional: padding for the divs */
+    border-radius: 4px;          /* Optional: rounded corners */
+    width: 260px;                /* Optional: fixed width for each item */
+    text-align: center;          /* Optional: center the text inside the div */
+    height: 330px;    /* Set the desired height */
+    overflow: auto;   /* Optional: Adds scrollbars if content overflows */
+    padding: 10px;    /* Optional: Add some padding inside the container */
+    margin-top: 15px;
+}
+
+.resizeable-item3 {
+    background: 
+    linear-gradient(to bottom, #b14242 55%, #ffffff 55%); /* Optional: background color for the divs */
+    padding: 10px;               /* Optional: padding for the divs */
+    border-radius: 4px;          /* Optional: rounded corners */
+    width: 260px;                /* Optional: fixed width for each item */
+    text-align: center;          /* Optional: center the text inside the div */
+    height: 330px;    /* Set the desired height */
+    overflow: auto;   /* Optional: Adds scrollbars if content overflows */
+    padding: 10px;    /* Optional: Add some padding inside the container */
+    margin-right: 20px;
+    margin-top: 15px;
+}
+.align-icon {
+    display: flex; /* Enable Flexbox */
+    padding: 30px; /* Optional: adds space between the icons */
+    padding-left: 01px;
+    padding-top: 05px;
+    align-items:left; /* Align icons vertically in the left */
+    width: 24px; /* Example width for each icon */
+    height: 24px; /* Example height for each icon */
+    --sds-c-icon-color-foreground-default: rgb(255, 255, 255); 
+}
+
+.my-badge {
+    background-color: transparent;  /* Transparent background */
+    color: white;  /* Change text color */
+    font-weight: bold;
+    font-size: 15px;
+}
+.CLB-left-margin {
+    
+    /* Adjust the value as needed */
+    background-color: transparent;
+}
+
+.custom-spacing {
+    gap: 0.8rem; /* Creates a very small gap */
+    margin-top: 10px;
+}
+
+.badge-container {
+    display: flex;
+    flex-direction: column; /* Arrange badges vertically */
+    align-items: flex-start; /* Align badges to the left */
+    margin-left: 0px; /* Ensures no extra space on the left */
+    margin-top: 02px;
+}
+
+.custom-table-background {
+
+    background-color: #cacad180;  /* Optional: background color for the divs */
+    padding: 10px;               /* Optional: padding for the divs */
+    border-radius: 4px;          /* Optional: rounded corners */
+    width: 600px;                /* Optional: fixed width for each item */
+    text-align: center;          /* Optional: center the text inside the div */
+    height: 330px;    /* Set the desired height */
+    overflow: auto;   /* Optional: Adds scrollbars if content overflows */
+    padding: 10px;    /* Optional: Add some padding inside the container */
+    margin-right: 20px;
+    margin-top: 15px;
+}

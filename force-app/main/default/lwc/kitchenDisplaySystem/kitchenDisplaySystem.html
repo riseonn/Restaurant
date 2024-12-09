@@ -1,0 +1,75 @@
+<template>
+    <lightning-datatable
+        key-field="Id"
+        data={data}
+        columns={columns}
+        onrowaction={handleRowAction}
+    ></lightning-datatable>
+
+    <template if:true={isEditModalOpen}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 class="slds-text-heading_medium slds-hyphenate">Edit Order</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <lightning-input 
+                        name="OTID__c"
+                        label="Order ID" 
+                        value={currentOrder.OTID__c}
+                        onchange={handleFieldChange}
+                    ></lightning-input>
+                    <lightning-input 
+                        name="First_Name__c"
+                        label="First Name" 
+                        value={currentOrder.First_Name__c}
+                        onchange={handleFieldChange}
+                    ></lightning-input>
+                    <lightning-input 
+                        name="Middle_Name__c"
+                        label="Middle Name" 
+                        value={currentOrder.Middle_Name__c}
+                        onchange={handleFieldChange}
+                    ></lightning-input>
+                    <lightning-input 
+                        name="Last_Name__c"
+                        label="Last Name" 
+                        value={currentOrder.Last_Name__c}
+                        onchange={handleFieldChange}
+                    ></lightning-input>
+                    <lightning-input 
+                        name="Email__c"
+                        label="Email" 
+                        value={currentOrder.Email__c}
+                        onchange={handleFieldChange}
+                    ></lightning-input>
+                    <lightning-input 
+                        name="Mobile__c"
+                        label="Mobile" 
+                        value={currentOrder.Mobile__c}
+                        onchange={handleFieldChange}
+                    ></lightning-input>
+                    <lightning-input 
+                        name="Status__c"
+                        label="Status" 
+                        value={currentOrder.Status__c}
+                        onchange={handleFieldChange}
+                    ></lightning-input>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button 
+                        variant="neutral" 
+                        label="Cancel" 
+                        onclick={handleModalClose}
+                    ></lightning-button>
+                    <lightning-button 
+                        variant="brand" 
+                        label="Save" 
+                        onclick={handleSaveOrder}
+                    ></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

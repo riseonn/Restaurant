@@ -2,6 +2,7 @@
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>56.0</apiVersion> <!-- Ensure the API version matches your Salesforce org's version -->
     <isExposed>true</isExposed> <!-- Expose the component for use in Lightning App Builder -->
+   
     <targets>
         <target>lightning__RecordPage</target> <!-- Allows component to be used in a record page -->
         <target>lightning__AppPage</target> <!-- Allows component to be used in an App Page -->
@@ -11,8 +12,10 @@
     <targetConfigs>
         <targetConfig targets="lightning__RecordPage">
             <objects>
-                <object>Menu__c</object> <!-- Specify the object (Menu__c in this case) -->
+                <object>KitchenDisplaySystem__c</object> <!-- Ensure the object name matches your org -->
             </objects>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
+
+
