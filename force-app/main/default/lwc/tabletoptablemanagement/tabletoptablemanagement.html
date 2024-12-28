@@ -1,0 +1,118 @@
+<template>
+    <lightning-card title="Table Top Table Management">
+        <div class="slds-m-around_medium">
+            <template if:true={error}>
+                <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+                    <span class="slds-assistive-text">error</span>
+                    <h2>{error.body.message}</h2>
+                </div>
+            </template>
+            <div class="slds-m-bottom_small slds-m-left_small">
+                <lightning-button label="Add New" onclick={handleAddNew}></lightning-button>
+            </div>
+        </div>
+
+        <lightning-datatable
+            key-field="TTID__c"
+            data={data}
+            columns={columns}
+            onrowaction={handleRowAction}
+        ></lightning-datatable>
+        
+        <!-- Edit Modal -->
+        <template if:true={isEditModalOpen}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 class="slds-text-heading_medium slds-hyphenate">Edit Table Top Information</h2>
+                        <button 
+                            class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverted" 
+                            title="Close" 
+                            onclick={handleModalClose}
+                        >
+                            <lightning-icon 
+                                icon-name="utility:close" 
+                                alternative-text="Close" 
+                                variant="inverse"
+                                size="small"
+                            ></lightning-icon>
+                        </button>
+                    </header>
+                    
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <!-- Form Inputs for Table Top Information -->
+                        <lightning-input 
+                            name="capacity"
+                            label="Capacity" 
+                            value={currentTableTop.Capacity__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="code"
+                            label="Code" 
+                            value={currentTableTop.Code__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="content"
+                            label="Content" 
+                            value={currentTableTop.Content__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="createdAt"
+                            label="Created At" 
+                            value={currentTableTop.Created_At__c} disabled="true"
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="updatedAt"
+                            label="Updated At" 
+                            value={currentTableTop.Updated_At__c} disabled="true"
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="status"
+                            label="Status" 
+                            value={currentTableTop.Status__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="ownerId"
+                            label="Owner ID" 
+                            value={currentTableTop.OwnerId} disabled="true"
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="createdBy"
+                            label="Created By" 
+                            value={currentTableTop.CreatedById}
+                            onchange={handleInputChange} disabled="true"
+                        ></lightning-input>
+                    </div>
+                    
+                    <footer class="slds-modal__footer">
+                        <lightning-button 
+                            variant="neutral" 
+                            label="Cancel" 
+                            onclick={handleModalClose}
+                        ></lightning-button>
+                        <lightning-button 
+                            variant="brand" 
+                            label="Save" 
+                            onclick={handleSaveTableTop}
+                        ></lightning-button>
+                        <div class="slds-float_left">
+                            <lightning-button
+                                variant="brand" 
+                                label="New Table Top" 
+                                onclick={handleNewTableTop}
+                            ></lightning-button>
+                        </div>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+    </lightning-card>
+</template>

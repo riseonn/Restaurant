@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Defines a custom object in Salesforce for Item-Chef relationships -->
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    
+    <!-- The unique name of the custom object -->
+    <fullName>Item_Chef__c</fullName>
+    
+    <!-- The label displayed for the custom object -->
+    <label>Item Chef</label>
+    
+    <!-- The plural label displayed for the custom object -->
+    <pluralLabel>Item Chefs</pluralLabel>
+    
+    <!-- Defines the name field for the custom object with auto-numbering format -->
+    <nameField>
+        <label>Item Chef Name</label>
+        <type>AutoNumber</type>
+        <!-- Format for auto-generated names (e.g., IC-0001) -->
+        <displayFormat>IC-{0000}</displayFormat>
+    </nameField>
+    
+    <!-- A description of the custom object for reference -->
+    <description>Links items and chefs in a restaurant.</description>
+    
+    <!-- The sharing model for the custom object, allowing Read and Write access -->
+    <sharingModel>ReadWrite</sharingModel>
+    
+    <!-- The deployment status indicates if the custom object is available for use -->
+    <deploymentStatus>Deployed</deploymentStatus>
+    
+    <!-- Enable or disable the creation of reports on this custom object -->
+    <enableReports>true</enableReports>
+    
+    <!-- Enable or disable the ability to search for this custom object -->
+    <enableSearch>true</enableSearch>
+    
+    <!-- Field definition for the ItemId__c field (Lookup relationship to Item__c) -->
+    <fields>
+        <fullName>ItemId__c</fullName>
+        <label>Item</label>
+        <type>Lookup</type>
+        <!-- Reference to the Item__c object (the related object) -->
+        <referenceTo>Item__c</referenceTo>
+        <!-- Label for the relationship in the UI -->
+        <relationshipLabel>Item Chefs</relationshipLabel>
+        <relationshipName>Item_Chefs</relationshipName>
+        <!-- Ensure this field is required -->
+        <required>true</required>
+        <!-- Delete behavior when the related Item is deleted -->
+        <deleteConstraint>SetNull</deleteConstraint>
+    </fields>
+    
+    <!-- Field definition for the ChefId__c field (Lookup relationship to User) -->
+    <fields>
+        <fullName>ChefId__c</fullName>
+        <label>Chef</label>
+        <type>Lookup</type>
+        <!-- Reference to the User object (the related object) -->
+        <referenceTo>User</referenceTo>
+        <!-- Label for the relationship in the UI -->
+        <relationshipLabel>Chef Items</relationshipLabel>
+        <relationshipName>Chef_Items</relationshipName>
+        <!-- Ensure this field is required -->
+        <required>true</required>
+        <!-- Delete behavior when the related Chef (User) is deleted -->
+        <deleteConstraint>SetNull</deleteConstraint>
+    </fields>
+    
+    <!-- Field definition for the Active__c field (Checkbox indicating active status) -->
+    <fields>
+        <fullName>Active__c</fullName>
+        <defaultValue>true</defaultValue>
+        <!-- Description of the field for clarity -->
+        <description>Indicates if this Item-Chef relationship is currently active</description>
+        <label>Active</label>
+        <!-- Enable history tracking for changes to this field -->
+        <trackHistory>true</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    
+    <!-- Validation rule to ensure unique Item-Chef combinations when active -->
+    <validationRules>
+        <fullName>Unique_Item_Chef</fullName>
+        <active>true</active>
+        <!-- Description of the validation rule's purpose -->
+        <description>Prevents duplicate Item-Chef combinations when active</description>
+        <!-- Formula to check if the combination of ItemId and ChefId is unique and active -->
+        <errorConditionFormula>NOT(ISBLANK(ItemId__c)) && 
+            NOT(ISBLANK(ChefId__c)) && 
+            Active__c = TRUE &&
+            NOT(
+                UNIQUE(ItemId__c, ChefId__c)
+            )</errorConditionFormula>
+        <!-- Error message displayed when the validation rule is triggered -->
+        <errorMessage>This combination of Item and Chef already exists and is active.</errorMessage>
+    </validationRules>
+    
+    <!-- List view definition for this custom object -->
+    <listViews>
+        <fullName>All</fullName>
+        <!-- This list view filters all records for this object -->
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+</CustomObject>

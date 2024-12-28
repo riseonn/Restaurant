@@ -1,0 +1,147 @@
+<template>
+    <lightning-card title="User Table Management">
+        <div class="slds-m-bottom_small slds-m-left_small">
+            <!-- Add New Button -->
+            <lightning-button label="Add New" onclick={handleAddNew}></lightning-button>
+        </div>
+
+        <lightning-datatable
+            key-field="utId__c"
+            data={data}
+            columns={columns}
+            onrowaction={handleRowAction}
+        ></lightning-datatable>
+        
+        <!-- Edit Modal -->
+        <template if:true={isEditModalOpen}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 class="slds-text-heading_medium slds-hyphenate">Edit User Information</h2>
+                        <button 
+                            class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverted" 
+                            title="Close" 
+                            onclick={handleModalClose}
+                        >
+                            <lightning-icon 
+                                icon-name="utility:close" 
+                                alternative-text="Close" 
+                                variant="inverse"
+                                size="small"
+                            ></lightning-icon>
+                        </button>
+                    </header>
+                    
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <!-- Form Inputs for User Information -->
+                        <lightning-input 
+                            name="firstName"
+                            label="First Name" 
+                            value={currentUser.First_Name__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="middleName"
+                            label="Middle Name" 
+                            value={currentUser.Middle_Name__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="lastName"
+                            label="Last Name" 
+                            value={currentUser.Last_Name__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="mobile"
+                            label="Mobile" 
+                            value={currentUser.Mobile__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="email"
+                            label="Email" 
+                            value={currentUser.Email__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input
+                            name="profile"
+                            label="Profile" 
+                            value={currentUser.Profile__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="createdBy"
+                            label="Created By" 
+                            value={currentUser.CreatedById}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="registeredAt"
+                            label="Registered At" 
+                            value={currentUser.Registered_At__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="lastLogin"
+                            label="Last Login" 
+                            value={currentUser.Last_Login__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="ownerId"
+                            label="Owner ID" 
+                            value={currentUser.OwnerId}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="vendor"
+                            label="Vendor" 
+                            value={currentUser.Vendor__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="utId"
+                            label="User ID" 
+                            value={currentUser.utId__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="agent"
+                            label="Agent" 
+                            value={currentUser.Agent__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="chef"
+                            label="Chef" 
+                            value={currentUser.Chef__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                    </div>
+                    
+                    <footer class="slds-modal__footer">
+                        <lightning-button 
+                            variant="neutral" 
+                            label="Cancel" 
+                            onclick={handleModalClose}
+                        ></lightning-button>
+                        <lightning-button 
+                            variant="brand" 
+                            label="Save" 
+                            onclick={handleSaveUser}
+                        ></lightning-button>
+                        <div class="slds-float_left">
+                            <lightning-button
+                                variant="brand" 
+                                label="New User" 
+                                onclick={handleNewUser}
+                            ></lightning-button>
+                        </div>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+    </lightning-card>
+</template>

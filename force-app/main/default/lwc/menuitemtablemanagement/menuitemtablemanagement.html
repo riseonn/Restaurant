@@ -1,0 +1,117 @@
+<template>
+    <lightning-card title="Menu Item Table Management">
+        <div class="slds-p-around_medium">
+            <!-- Add New Button -->
+            <div class="slds-m-bottom_small slds-m-left_small">
+                <lightning-button label="Add New" onclick={handleAddNew}></lightning-button>
+            </div>
+            <lightning-datatable
+                key-field="Id"
+                data={menuItems}
+                columns={columns}
+                onrowaction={handleRowAction}
+                hide-checkbox-column
+            ></lightning-datatable>
+        </div>
+
+        <!-- Modal Template -->
+        <template if:true={isModalOpen}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 id="modal-heading" class="slds-text-heading_medium">Edit Menu Item</h2>
+                        <button class="slds-button slds-button_icon slds-modal__close" onclick={closeModal}>
+                            <lightning-icon 
+                                icon-name="utility:close" 
+                                alternative-text="Close" 
+                                variant="inverse"
+                            ></lightning-icon>
+                        </button>
+                    </header>
+
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <!-- Menu Item Name -->
+                        <lightning-input 
+                            name="Name"
+                            label="Menu Item Name" 
+                            value={currentMenuItem.Name}
+                            onchange={handleInputChange}
+                            required
+                        ></lightning-input>
+
+                        <!-- Active Checkbox -->
+                        <lightning-input 
+                            name="Active__c"
+                            label="Active" 
+                            type="checkbox" 
+                            checked={currentMenuItem.Active__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+
+                        <!-- MIT ID -->
+                        <lightning-input 
+                            name="MITID__c"
+                            label="Menu Item ID" 
+                            value={currentMenuItem.MITID__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+
+                        <!-- Item ID -->
+                        <lightning-input 
+                            name="MITEM_ID__c"
+                            label="Item ID" 
+                            value={currentMenuItem.MITEM_ID__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+
+                        <!-- Menu ID -->
+                        <lightning-input 
+                            name="MENUIT_ID__c"
+                            label="Menu ID" 
+                            value={currentMenuItem.MENUIT_ID__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+
+                        <!-- Owner ID -->
+                        <lightning-input 
+                            name="OwnerId"
+                            label="Owner ID" 
+                            value={currentMenuItem.OwnerId}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+
+                        <!-- Created By ID -->
+                        <lightning-input 
+                            name="CreatedById"
+                            label="Created By ID" 
+                            value={currentMenuItem.CreatedById}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+
+                        <!-- Last Modified By ID -->
+                        <lightning-input 
+                            name="LastModifiedById"
+                            label="Last Modified By ID" 
+                            value={currentMenuItem.LastModifiedById}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                    </div>
+
+                    <footer class="slds-modal__footer">
+                        <lightning-button 
+                            variant="neutral" 
+                            label="Cancel" 
+                            onclick={closeModal}
+                        ></lightning-button>
+                        <lightning-button 
+                            variant="brand" 
+                            label="Save" 
+                            onclick={saveMenuItem}
+                        ></lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+    </lightning-card>
+</template>

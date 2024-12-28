@@ -3,5 +3,7 @@
     "**/node_modules": true,
     "**/bower_components": true,
     "**/.sfdx": true
-  }
+  },
+  "salesforcedx-vscode-slds.enabled": true,
+  "salesforcedx-vscode-slds.enhancements.autoSuggest": true
 }

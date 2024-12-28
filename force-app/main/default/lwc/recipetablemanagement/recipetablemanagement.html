@@ -1,0 +1,103 @@
+<template>
+    <lightning-card title="Recipe Table Management">
+        <div class="slds-m-around_medium">
+            <div class="slds-m-bottom_small slds-m-left_small">
+                <lightning-button 
+                    label="Add New" 
+                    variant="brand" 
+                    onclick={handleEdit}
+                ></lightning-button>
+            </div>
+
+            <lightning-datatable
+                key-field="Id"
+                data={data}
+                columns={columns}
+                onrowaction={handleRowAction}
+                hide-checkbox-column
+            ></lightning-datatable>
+        
+            <template if:true={isEditModalOpen}>
+                <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <h2 class="slds-text-heading_medium slds-hyphenate">{modalTitle}</h2>
+                            <button 
+                                class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" 
+                                title="Close" 
+                                onclick={handleModalClose}
+                            >
+                                <lightning-icon 
+                                    icon-name="utility:close" 
+                                    alternative-text="Close" 
+                                    variant="inverse"
+                                    size="small"
+                                ></lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                        </header>
+                    
+                        <div class="slds-modal__content slds-p-around_medium">
+                            <lightning-input 
+                                required
+                                name="Name"
+                                label="Recipe Name" 
+                                value={currentRecipe.Name}
+                                onchange={handleInputChange}
+                            ></lightning-input>
+                            <lightning-input 
+                                required
+                                type="number"
+                                name="Quantity__c"
+                                label="Quantity" 
+                                value={currentRecipe.Quantity__c}
+                                onchange={handleInputChange}
+                            ></lightning-input>
+                            <lightning-input 
+                                required
+                                name="Unit__c"
+                                label="Unit" 
+                                value={currentRecipe.Unit__c}
+                                onchange={handleInputChange}
+                            ></lightning-input>
+                            <lightning-textarea 
+                                required
+                                name="Instructions__c"
+                                label="Instructions" 
+                                value={currentRecipe.Instructions__c}
+                                onchange={handleInputChange}
+                            ></lightning-textarea>
+                            <lightning-input 
+                                name="RPIND__c"
+                                label="Recipe Indication" 
+                                value={currentRecipe.RPIND__c}
+                                onchange={handleInputChange}
+                            ></lightning-input>
+                            <lightning-input 
+                                name="RPITD__c"
+                                label="Recipe Time Description" 
+                                value={currentRecipe.RPITD__c}
+                                onchange={handleInputChange}
+                            ></lightning-input>
+                        </div>
+                    
+                        <footer class="slds-modal__footer">
+                            <lightning-button 
+                                class="slds-m-right_x-small"
+                                variant="neutral" 
+                                label="Cancel" 
+                                onclick={handleModalClose}
+                            ></lightning-button>
+                            <lightning-button 
+                                variant="brand" 
+                                label="Save" 
+                                onclick={handleSaveRecipe}
+                            ></lightning-button>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

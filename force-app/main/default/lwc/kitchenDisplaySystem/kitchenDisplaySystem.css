@@ -1,0 +1,137 @@
+/* kitchenDisplaySystem.css */
+.status-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #0176d3;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin: 0 auto;
+    margin-bottom: 8px;
+}
+
+.status-label {
+    text-align: center;
+    font-size: 0.875rem;
+    color: #2b2b2b;
+}
+
+.status-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    margin: 2rem 0;
+    position: relative;
+}
+
+.status-container:before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 20%;
+    right: 20%;
+    height: 2px;
+    background: #0176d3;
+    z-index: 0;
+}
+
+.search-container {
+    max-width: 200px;
+    margin: 1rem 0;
+}
+
+.action-button {
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    margin-right: 0.5rem;
+    background: #0176d3;
+    color: white;
+    border: none;
+    font-size: 0.875rem;
+    cursor: pointer;
+}
+
+.action-buttons {
+    margin: 1rem 0;
+}
+
+.order-card {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    min-height: 200px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.new-order {
+    background-color: #98FB98;
+}
+
+.processed-order {
+    background-color: #FFFFE0;
+}
+
+.ready-order {
+    background-color: #FFB6C1;
+}
+
+.served-order {
+    background-color: #32CD32;
+}
+
+.card-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.table-number {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #2b2b2b;
+}
+
+.timestamp {
+    font-size: 0.875rem;
+    color: #666;
+    margin-top: 0.25rem;
+}
+
+.order-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.order-item {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.order-table {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@media screen and (max-width: 768px) {
+    .status-container:before {
+        left: 10%;
+        right: 10%;
+    }
+    
+    .search-container {
+        max-width: 100%;
+    }
+    
+    .slds-grid {
+        display: block;
+    }
+    
+    .slds-col {
+        margin-bottom: 1rem;
+    }
+}

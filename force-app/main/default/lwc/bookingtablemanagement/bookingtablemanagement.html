@@ -1,0 +1,208 @@
+<template>
+    <lightning-card title="Booking Management">
+        <div class="slds-p-around_medium">
+            <!-- Add New Button -->
+            <div class="slds-m-bottom_small slds-m-left_small">
+                <lightning-button label="Add New" onclick={handleAddNew}></lightning-button>
+            </div>
+
+            <lightning-datatable
+                key-field="Id"
+                data={bookings}
+                columns={columns}
+                onrowaction={handleRowAction}
+                hide-checkbox-column
+            ></lightning-datatable>
+        </div>
+
+        <!-- Edit Modal -->
+        <template if:true={isModalOpen}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 class="slds-text-heading_medium">Edit Booking</h2>
+                        <button 
+                            class="slds-button slds-button_icon slds-modal__close" 
+                            onclick={closeModal}
+                        >
+                            <lightning-icon 
+                                icon-name="utility:close" 
+                                alternative-text="Close" 
+                                variant="inverse"
+                            ></lightning-icon>
+                        </button>
+                    </header>
+
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <lightning-input 
+                            name="First_Name__c"
+                            label="First Name" 
+                            value={currentBooking.First_Name__c}
+                            onchange={handleInputChange}
+                            required
+                        ></lightning-input>
+
+                        <lightning-input 
+                            name="Middle_Name__c"
+                            label="Middle Name" 
+                            value={currentBooking.Middle_Name__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+
+                        <lightning-input 
+                            name="Last_Name__c"
+                            label="Last Name" 
+                            value={currentBooking.Last_Name__c}
+                            onchange={handleInputChange}
+                            required
+                        ></lightning-input>
+
+                        <lightning-input 
+                            name="Email__c"
+                            label="Email" 
+                            value={currentBooking.Email__c}
+                            onchange={handleInputChange}
+                            type="email"
+                            required
+                        ></lightning-input>
+
+                        <lightning-input 
+                            name="Mobile__c"
+                            label="Mobile" 
+                            value={currentBooking.Mobile__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+
+                        <lightning-combobox 
+                            name="Status__c"
+                            label="Status" 
+                            value={currentBooking.Status__c}
+                            options={statusOptions}
+                            onchange={handleInputChange}
+                            required
+                        ></lightning-combobox>
+
+                        <lightning-input 
+                            name="City__c"
+                            label="City" 
+                            value={currentBooking.City__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+
+                        <lightning-input 
+                            name="Country__c"
+                            label="Country" 
+                            value={currentBooking.Country__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+
+                        <lightning-input 
+                            name="Province__c"
+                            label="Province" 
+                            value={currentBooking.Province__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+
+                        <lightning-input 
+                            name="Line_1__c"
+                            label="Address Line 1" 
+                            value={currentBooking.Line_1__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+
+                        <lightning-input 
+                            name="Line_2__c"
+                            label="Address Line 2" 
+                            value={currentBooking.Line_2__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+
+                        <lightning-input 
+                            name="BTID__c"
+                            label="BTID" 
+                            value={currentBooking.BTID__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+
+                        <lightning-input 
+                            name="Token__c"
+                            label="Token" 
+                            value={currentBooking.Token__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+
+                        <lightning-input 
+                            name="Table_Id__c"
+                            label="Table ID" 
+                            value={currentBooking.Table_Id__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+
+                        <lightning-input 
+                            name="User_Id__c"
+                            label="User ID" 
+                            value={currentBooking.User_Id__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+
+                        <lightning-input 
+                            name="Created_At__c"
+                            label="Created At" 
+                            value={currentBooking.Created_At__c}
+                            onchange={handleInputChange}
+                            type="datetime-local"
+                            disabled
+                        ></lightning-input>
+
+                        <lightning-input 
+                            name="Updated_At__c"
+                            label="Updated At" 
+                            value={currentBooking.Updated_At__c}
+                            onchange={handleInputChange}
+                            type="datetime-local"
+                            disabled
+                        ></lightning-input>
+
+                        <lightning-input 
+                            name="CreatedById"
+                            label="Created By" 
+                            value={currentBooking.CreatedById}
+                            onchange={handleInputChange}
+                            disabled
+                        ></lightning-input>
+
+                        <lightning-input 
+                            name="LastModifiedById"
+                            label="Last Modified By" 
+                            value={currentBooking.LastModifiedById}
+                            onchange={handleInputChange}
+                            disabled
+                        ></lightning-input>
+
+                        <lightning-input 
+                            name="OwnerId"
+                            label="Owner" 
+                            value={currentBooking.OwnerId}
+                            onchange={handleInputChange}
+                            disabled
+                        ></lightning-input>
+                    </div>
+
+                    <footer class="slds-modal__footer">
+                        <lightning-button 
+                            variant="neutral" 
+                            label="Cancel" 
+                            onclick={closeModal}
+                        ></lightning-button>
+                        <lightning-button 
+                            variant="brand" 
+                            label="Save" 
+                            onclick={saveBooking}
+                        ></lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+    </lightning-card>
+</template>

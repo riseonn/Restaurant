@@ -1,0 +1,159 @@
+<template>
+    <lightning-card title="Order Item Table Management">
+
+        <!-- Error handling -->
+        <template if:true={error}>
+            <div class="slds-notify slds-notify_alert slds-theme_error" role="alert">
+                <h2>{error.body.message}</h2>
+            </div>
+        </template>
+
+        <!-- Add New Button -->
+        <div class="slds-m-bottom_small slds-m-left_small">
+            <lightning-button label="Add New" onclick={handleAddNew}></lightning-button>
+        </div>
+
+        <!-- Data Table -->
+        <lightning-datatable
+            key-field="OITID__c"
+            data={data}
+            columns={columns}
+            onrowaction={handleRowAction}
+        ></lightning-datatable>
+
+        <!-- Edit Modal -->
+        <template if:true={isEditModalOpen}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- Modal Header -->
+                    <header class="slds-modal__header">
+                        <h2 class="slds-text-heading_medium slds-hyphenate">Edit Order Item</h2>
+                        <button 
+                            class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverted" 
+                            title="Close" 
+                            onclick={handleModalClose}
+                        >
+                            <lightning-icon 
+                                icon-name="utility:close" 
+                                alternative-text="Close" 
+                                variant="inverse"
+                                size="small"
+                            ></lightning-icon>
+                        </button>
+                    </header>
+
+                    <!-- Modal Content -->
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <lightning-input 
+                            name="OITID__c"
+                            label="OITID" 
+                            value={currentOrderItem.OITID__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="Content__c"
+                            label="Content" 
+                            value={currentOrderItem.Content__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="Created_At__c"
+                            label="Created At" 
+                            value={currentOrderItem.Created_At__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="CreatedById"
+                            label="Created By" 
+                            value={currentOrderItem.CreatedById}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="Discount__c"
+                            label="Discount" 
+                            value={currentOrderItem.Discount__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="Item_Id__c"
+                            label="Item ID" 
+                            value={currentOrderItem.Item_Id__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="LastModifiedById"
+                            label="Last Modified By" 
+                            value={currentOrderItem.LastModifiedById}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="Order_Id__c"
+                            label="Order ID" 
+                            value={currentOrderItem.Order_Id__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="Name"
+                            label="Name" 
+                            value={currentOrderItem.Name}
+                            onchange={handleInputChange}
+                            required
+                        ></lightning-input>
+                        <lightning-input 
+                            name="OwnerId"
+                            label="Owner ID" 
+                            value={currentOrderItem.OwnerId}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="Price__c"
+                            label="Price" 
+                            value={currentOrderItem.Price__c}
+                            onchange={handleInputChange}
+                            required
+                        ></lightning-input>
+                        <lightning-input 
+                            name="Quantity__c"
+                            label="Quantity" 
+                            value={currentOrderItem.Quantity__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="SKU__c"
+                            label="SKU" 
+                            value={currentOrderItem.SKU__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="Unit__c"
+                            label="Unit" 
+                            value={currentOrderItem.Unit__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                        <lightning-input 
+                            name="Updated_At__c"
+                            label="Updated At" 
+                            value={currentOrderItem.Updated_At__c}
+                            onchange={handleInputChange}
+                        ></lightning-input>
+                    </div>
+
+                    <!-- Modal Footer -->
+                    <footer class="slds-modal__footer">
+                        <lightning-button 
+                            variant="neutral" 
+                            label="Cancel" 
+                            onclick={handleModalClose}
+                        ></lightning-button>
+                        <lightning-button 
+                            variant="brand" 
+                            label="Save" 
+                            onclick={handleSaveOrderItem}
+                        ></lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+    </lightning-card>
+</template>

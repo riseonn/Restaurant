@@ -1,0 +1,91 @@
+<template>
+    <lightning-card title="Transaction Table Management">
+        <div class="slds-m-around_medium">
+            <template if:true={error}>
+                <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+                    <span class="slds-assistive-text">error</span>
+                    <h2>{error.body.message}</h2>
+                </div>
+            </template>
+            <div class="slds-m-bottom_small slds-m-left_small">
+                <lightning-button label="Add New" onclick={handleInsert}></lightning-button>
+            </div>
+            <lightning-datatable
+                key-field="Id"
+                data={data}
+                columns={columns}
+                onrowaction={handleRowAction}
+                hide-checkbox-column>
+            </lightning-datatable>
+
+            <!-- Edit Modal -->
+            <template if:true={isEditModalOpen}>
+                <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <h2 class="slds-text-heading_medium slds-hyphenate">{upsertLabel} Transaction</h2>
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                    title="Close" onclick={handleModalClose}>
+                                <lightning-icon icon-name="utility:close"
+                                              alternative-text="close"
+                                              variant="inverse"
+                                              size="small"></lightning-icon>
+                            </button>
+                        </header>
+
+                        <div class="slds-modal__content slds-p-around_medium">
+                            <lightning-input name="TNID__c" 
+                                           label="Transaction ID" 
+                                           value={currentTransaction.TNID__c}
+                                           disabled></lightning-input>
+                            <lightning-input name="Code__c" 
+                                           label="Code" 
+                                           value={currentTransaction.Code__c}
+                                           onchange={handleInputChange}></lightning-input>
+                            <lightning-input name="Content__c" 
+                                           label="Content" 
+                                           value={currentTransaction.Content__c}
+                                           onchange={handleInputChange}></lightning-input>
+                            <lightning-input name="Mode__c" 
+                                           label="Mode" 
+                                           value={currentTransaction.Mode__c}
+                                           onchange={handleInputChange}></lightning-input>
+                            <lightning-input name="Order_Id__c" 
+                                           label="Order ID" 
+                                           value={currentTransaction.Order_Id__c}
+                                           onchange={handleInputChange}></lightning-input>
+                            <lightning-input name="Status__c" 
+                                           label="Status" 
+                                           value={currentTransaction.Status__c}
+                                           onchange={handleInputChange}></lightning-input>
+                            <lightning-input name="Name" 
+                                           label="Name" 
+                                           value={currentTransaction.Name}
+                                           onchange={handleInputChange}></lightning-input>
+                            <lightning-input name="Type__c" 
+                                           label="Type" 
+                                           value={currentTransaction.Type__c}
+                                           onchange={handleInputChange}></lightning-input>
+                            <lightning-input name="User_Id__c" 
+                                           label="User ID" 
+                                           value={currentTransaction.User_Id__c}
+                                           onchange={handleInputChange}></lightning-input>
+                            <lightning-input name="Vendor_Id__c" 
+                                           label="Vendor ID" 
+                                           value={currentTransaction.Vendor_Id__c}
+                                           onchange={handleInputChange}></lightning-input>
+                        </div>
+
+                        <footer class="slds-modal__footer">
+                            <button class="slds-button slds-button_neutral" 
+                                    onclick={handleModalClose}>Cancel</button>
+                            <button class="slds-button slds-button_brand" 
+                                    onclick={handleSaveTransaction}>Save</button>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

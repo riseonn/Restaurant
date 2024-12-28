@@ -1,0 +1,146 @@
+<!-- kitchenDisplaySystem.html -->
+<template>
+    <!-- Search Bar -->
+    <div class="search-container">
+        <lightning-input
+            type="search"
+            label="Search Menu"
+            variant="label-hidden"
+            placeholder="Search Menu">
+        </lightning-input>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="slds-m-bottom_small slds-m-left_small">
+        <lightning-button
+            variant="brand"
+            label="Orders"
+            onclick={handleorders}
+        ></lightning-button>
+
+        <lightning-button
+        variant="brand"
+        label="Sales"
+        onclick={handlesales}
+        class="slds-m-left_small"
+    ></lightning-button>
+</div>
+
+    <!-- Status Circles with Count -->
+    <div class="status-container">
+        <div class="status-group">
+            <div class="status-circle">
+                {newOrders.length}
+            </div>
+            <div class="status-label">New Order</div>
+        </div>
+        <div class="status-group">
+            <div class="status-circle">
+                {inProgressOrders.length}
+            </div>
+            <div class="status-label">Processed</div>
+        </div>
+        <div class="status-group">
+            <div class="status-circle">
+                {readyOrders.length}
+            </div>
+            <div class="status-label">Ready</div>
+        </div>
+        <div class="status-group">
+            <div class="status-circle">
+                {servedOrders.length}
+            </div>
+            <div class="status-label">Served</div>
+        </div>
+    </div>
+
+    <!-- Order Cards Grid -->
+    <div class="slds-grid slds-gutters slds-m-around_medium">
+        <!-- New Orders -->
+        <div class="slds-col slds-size_1-of-4">
+            <div class="order-card new-order">
+                <template for:each={newOrders} for:item="order">
+                    <div key={order.Id} class="card-header">
+                        <div class="table-number">Order #{order.OTID__c}</div>
+                        <div class="timestamp">{order.Created_At__c}</div>
+                        <div class="order-items">
+                            <p>Name: {order.First_Name__c} {order.Last_Name__c}</p>
+                            <p>Total: ${order.Total__c}</p>
+                            <p>Status: {order.Status__c}</p>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <!-- Processing Orders -->
+        <div class="slds-col slds-size_1-of-4">
+            <div class="order-card processed-order">
+                <template for:each={inProgressOrders} for:item="order">
+                    <div key={order.Id} class="card-header">
+                        <div class="table-number">Order #{order.OTID__c}</div>
+                        <div class="timestamp">{order.Created_At__c}</div>
+                        <div class="order-items">
+                            <p>Name: {order.First_Name__c} {order.Last_Name__c}</p>
+                            <p>Total: ${order.Total__c}</p>
+                            <p>Status: {order.Status__c}</p>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <!-- Ready Orders -->
+        <div class="slds-col slds-size_1-of-4">
+            <div class="order-card ready-order">
+                <template for:each={readyOrders} for:item="order">
+                    <div key={order.Id} class="card-header">
+                        <div class="table-number">Order #{order.OTID__c}</div>
+                        <div class="timestamp">{order.Created_At__c}</div>
+                        <div class="order-items">
+                            <p>Name: {order.First_Name__c} {order.Last_Name__c}</p>
+                            <p>Total: ${order.Total__c}</p>
+                            <p>Status: {order.Status__c}</p>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <!-- Served Orders (New Card with Green Background) -->
+        <div class="slds-col slds-size_1-of-4">
+            <div class="order-card served-order">
+                <template for:each={servedOrders} for:item="order">
+                    <div key={order.Id} class="card-header">
+                        <div class="table-number">Order #{order.OTID__c}</div>
+                        <div class="timestamp">{order.Created_At__c}</div>
+                        <div class="order-items">
+                            <p>Name: {order.First_Name__c} {order.Last_Name__c}</p>
+                            <p>Total: ${order.Total__c}</p>
+                            <p>Status: {order.Status__c}</p>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+    <!-- Orders Data Table (Below the Order Cards) -->
+    <div class="slds-m-top_medium">
+        <div class="order-table">
+            <template if:true={errorMessage}>
+                <div class="slds-notify slds-notify_alert slds-alert_error">
+                    {errorMessage}
+                </div>
+            </template>
+            <lightning-datatable
+                key-field="Id"
+                data={allOrders}
+                columns={columns}
+                hide-checkbox-column="true"
+                show-row-number-column="true"
+                min-column-width="200">
+            </lightning-datatable>
+        </div>
+    </div>
+</template>
