@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ApexClass>
-    <apiVersion>62.0</apiVersion>
-    <status>Active</status>
-</ApexClass>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>56.0</apiVersion> <!-- Ensure the API version matches your Salesforce org's version -->
+    <isExposed>true</isExposed> <!-- Expose the component for use in Lightning App Builder -->
+   
+    <targets>
+        <target>lightning__RecordPage</target> <!-- Allows component to be used in a record page -->
+        <target>lightning__AppPage</target> <!-- Allows component to be used in an App Page -->
+        <target>lightning__RecordAction</target> <!-- Allows component to be used as a record action -->
+        <target>lightning__HomePage</target> <!-- Allows component to be used on the Home Page -->
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <objects>
+                <object>Order_Table__c</object> <!-- Ensure the object name matches your org -->
+            </objects>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

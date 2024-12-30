@@ -1,4 +1,5 @@
 public with sharing class ItemChefTable {
+    
     // Method to retrieve Item_Chef__c records
     @AuraEnabled(cacheable=true)
     public static List<Item_Chef__c> getItemChefs() {
@@ -33,7 +34,7 @@ public with sharing class ItemChefTable {
         try {
             // Perform update operation
             update itemChefList;
-        } catch (Exception e) {
+        } catch (DmlException e) {
             // Log the error details
             System.debug('Update Item Chef Error: ' + e.getMessage());
             throw new AuraHandledException('Failed to update item chef(s): ' + e.getMessage());
@@ -50,14 +51,14 @@ public with sharing class ItemChefTable {
         try {
             // Delete the Item_Chef__c record
             delete [SELECT Id FROM Item_Chef__c WHERE Id = :itemChefId LIMIT 1];
-        } catch (Exception e) {
+        } catch (DmlException e) {
             // Log the error
             System.debug('Delete Item Chef Error: ' + e.getMessage());
             throw new AuraHandledException('Failed to delete item chef: ' + e.getMessage());
         }
     }
 
-    // New Method to Create Item_Chef__c record
+    // Method to create Item_Chef__c record
     @AuraEnabled
     public static void createItemChef(Item_Chef__c itemChef) {
         if (itemChef == null) {
@@ -67,7 +68,7 @@ public with sharing class ItemChefTable {
         try {
             // Insert the new Item_Chef__c record
             insert itemChef;
-        } catch (Exception e) {
+        } catch (DmlException e) {
             // Log the error details
             System.debug('Create Item Chef Error: ' + e.getMessage());
             throw new AuraHandledException('Failed to create item chef: ' + e.getMessage());

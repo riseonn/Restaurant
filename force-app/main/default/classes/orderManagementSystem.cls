@@ -1,4 +1,4 @@
-public with sharing class orderManagementSystem {
+public with sharing class OrderManagementSystem {
 
     // Method to retrieve orders based on their status
     @AuraEnabled(cacheable=true)
@@ -32,17 +32,18 @@ public with sharing class orderManagementSystem {
                        Tax__c,
                        Token__c,
                        User_Id__c,
-                       Vendor_Id__c
-                FROM Order_Table__c
-                WHERE Status__c IN ('New', 'Processing', 'Ready', 'Served')
-                LIMIT 100
+                       Vendor_Id__c,
+                       (SELECT Preparation_Time__c FROM Item_Chefs__r)
+                       FROM Order_Table__c
+                       WHERE Status__c IN ('New', 'Processing', 'Ready', 'Served')
+                       LIMIT 100
             ];
         } catch (Exception e) {
             throw new AuraHandledException('Error retrieving order data: ' + e.getMessage());
         }
     }
 
-    // Method to update order records
+    // Method to update a list of order records
     @AuraEnabled
     public static void updateOrder(List<Order_Table__c> orderList) {
         if (orderList == null || orderList.isEmpty()) {
