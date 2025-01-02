@@ -19,7 +19,7 @@ export default class OrderItemTable extends NavigationMixin(LightningElement) {
         { label: 'OITID', fieldName: 'OITID__c' },
         { label: 'Order ID', fieldName: 'Order_Id__c' },
         { label: 'Name', fieldName: 'Name' },
-        { label: 'Content', fieldName: 'Content__c' },
+        { label: 'Order', fieldName: 'Order__c'},
         { label: 'Created By', fieldName: 'CreatedById' },
         { label: 'Discount', fieldName: 'Discount__c' },
         { label: 'Item ID', fieldName: 'Item_Id__c' },

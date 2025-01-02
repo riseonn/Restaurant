@@ -1,40 +1,41 @@
 <template>
-    <!-- Search Input for Orders -->
-    <lightning-input
-        label="Search Orders"
-        value={searchKeyword}
-        onchange={handleSearchInputChange}
-        placeholder="Search by Order ID, Chef Name, Status, etc."
-        class="custom-search-label"
-    ></lightning-input>
+    <!-- Wrapper Div with Flexbox Layout -->
+    <div style="display: flex; justify-content: center; align-items: center; max-width: 100%; background-color: white; padding: 20px; border-radius: 4px;">
+        <!-- Search Input for Orders -->
+        <lightning-input
+            value={searchKeyword}
+            onchange={handleSearchInputChange}
+            placeholder="Search by Order ID, Chef Name, Status, etc."
+            class="custom-search-label"
+            style="flex-grow: 1; height: 2.2rem; width: 50%;"
+        ></lightning-input>
 
-
-    <!-- Action Buttons -->
-    <div class="slds-m-bottom_small slds-m-left_small">
+        <!-- Action Buttons (Orders and Sales) -->
         <lightning-button
             variant="brand"
             label="Orders"
             onclick={handleorders}
+            style="height: 2.2rem; margin-left: 10px;"
         ></lightning-button>
         <lightning-button
             variant="brand"
             label="Sales"
             onclick={handlesales}
-            class="slds-m-left_small"
+            style="height: 2.2rem; margin-left: 10px;"
         ></lightning-button>
     </div>
 
     <!-- Status Circles with Count -->
-    <div class="status-container">
-        <div class="status-group">
+    <div class="status-container" style="display: flex; justify-content: center; margin-top: 20px;">
+        <div class="status-group" style="margin-right: 20px;">
             <div class="status-circle">{newOrders.length}</div>
-            <div class="status-label">New Order</div>
+            <div class="status-label">New Orders</div>
         </div>
-        <div class="status-group">
+        <div class="status-group" style="margin-right: 20px;">
             <div class="status-circle">{inProgressOrders.length}</div>
             <div class="status-label">Processed</div>
         </div>
-        <div class="status-group">
+        <div class="status-group" style="margin-right: 20px;">
             <div class="status-circle">{readyOrders.length}</div>
             <div class="status-label">Ready</div>
         </div>
@@ -43,118 +44,157 @@
             <div class="status-label">Served</div>
         </div>
     </div>
-
-    <div class="slds-grid slds-gutters slds-m-around_medium">
-        <!-- New Orders -->
-        <div class="slds-col slds-size_1-of-4">
-            <div class="order-card new-order">
-                <template for:each={newOrders} for:item="order">
-                    <div key={order.Id} class="card-header">
-                        <div class="table-number">Order #{order.OTID__c}</div>
-                        <div class="order-items">
-                            <p>Name: {order.First_Name__c} {order.Last_Name__c}</p>
-                            <p>Total: ${order.Total__c}</p>
-                            <p>Chef: {order.chefName}</p>
-                            <p>Status: {order.Status__c}</p>
-                            <div class="slds-grid slds-gutters">
-                                <div class="slds-col">
-                                    <p>Preparation Time: {order.formattedPrepTime}</p>
+    <div class="slds-scrollable_y slds-box slds-m-around_medium" style="height: 400px; background-color: white;">
+        <div class="slds-grid slds-gutters">
+            <!-- New Orders Card -->
+            <div class="slds-col slds-size_1-of-4">
+                <div class="order-card new-order">
+                    <template for:each={newOrders} for:item="order">
+                        <div key={order.Id} class="card-header">
+                            <div class="table-number">Order #{order.OTID__c}</div>
+                            <div class="order-items">
+                                <p>Name: {order.First_Name__c} {order.Last_Name__c}</p>
+                                <p>Total: ${order.Total__c}</p>
+                                <p>Status: {order.Status__c}</p>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col">
+                                        <p>Preparation Time: {order.formattedPrepTime}</p>
+                                    </div>
+                                    <div class="slds-col">
+                                        <lightning-button 
+                                            variant="brand"
+                                            label="Claim"
+                                            data-orderid={order.Id}
+                                            onclick={handleClaim}
+                                            disabled={order.claimDisabled}
+                                            class="slds-m-left_x-small">
+                                        </lightning-button>
+                                    </div>
                                 </div>
+                                <div class="timestamp">Order placed at: {order.Created_At__c}</div>
                             </div>
-                            <div class="timestamp">Order placed at: {order.Created_At__c}</div>
                         </div>
-                    </div>
-                </template>
+                    </template>
+                </div>
             </div>
-        </div>
 
-        <!-- Processing Orders -->
-        <div class="slds-col slds-size_1-of-4">
-            <div class="order-card processed-order">
-                <template for:each={inProgressOrders} for:item="order">
-                    <div key={order.Id} class="card-header">
-                        <div class="table-number">Order #{order.OTID__c}</div>
-                        <div class="order-items">
-                            <p>Name: {order.First_Name__c} {order.Last_Name__c}</p>
-                            <p>Chef: {order.chefName}</p>
-                            <p>Total: ${order.Total__c}</p>
-                            <p>Status: {order.Status__c}</p>
-                            <p>Preparation Time: {order.formattedPrepTime}</p>
-                            <div class="timestamp">Order placed at: {order.Created_At__c}</div>
+            <!-- Processed Orders Card -->
+            <div class="slds-col slds-size_1-of-4">
+                <div class="order-card processed-order">
+                    <template for:each={inProgressOrders} for:item="order">
+                        <div key={order.Id} class="card-header">
+                            <div class="table-number">Order #{order.OTID__c}</div>
+                            <div class="order-items">
+                                <p>Name: {order.First_Name__c} {order.Last_Name__c}</p>
+                                <template if:true={order.ownerName}>
+                                    <p>Chef: {order.ownerName}</p>
+                                </template>
+                                <p>Total: ${order.Total__c}</p>
+                                <p>Status: {order.Status__c}</p>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col">
+                                        <p>Preparation Time: {order.formattedPrepTime}</p>
+                                    </div>
+                                    <div class="slds-col">
+                                        <lightning-button 
+                                            variant="brand"
+                                            label="Unclaim"
+                                            data-orderid={order.Id}
+                                            onclick={handleunclaim}
+                                            disabled={order.unclaimDisabled}
+                                            class="slds-m-left_x-small">
+                                        </lightning-button>
+                                    </div>
+                                </div>
+                                <div class="timestamp">Order placed at: {order.Created_At__c}</div>
+                            </div>
                         </div>
-                    </div>
-                </template>
+                    </template>
+                </div>
             </div>
-        </div>
-
-        <!-- Ready Orders -->
-        <div class="slds-col slds-size_1-of-4">
-            <div class="order-card ready-order">
-                <template for:each={readyOrders} for:item="order">
-                    <div key={order.Id} class="card-header">
-                        <div class="table-number">Order #{order.OTID__c}</div>
-                        <div class="order-items">
-                            <p>Name: {order.First_Name__c} {order.Last_Name__c}</p>
-                            <p>Chef: {order.chefName}</p>
-                            <p>Total: ${order.Total__c}</p>
-                            <p>Status: {order.Status__c}</p>
-                            <p>Preparation Time: {order.formattedPrepTime}</p>
-                            <div class="timestamp">Order placed at: {order.Created_At__c}</div>
+            <!-- Ready Orders Card -->
+            <div class="slds-col slds-size_1-of-4">
+                <div class="order-card ready-order">
+                    <template for:each={readyOrders} for:item="order">
+                        <div key={order.Id} class="card-header">
+                            <div class="table-number">Order #{order.OTID__c}</div>
+                            <div class="order-items">
+                                <p>Name: {order.First_Name__c} {order.Last_Name__c}</p>
+                                <p>Chef: {order.chefName}</p>
+                                <p>Total: ${order.Total__c}</p>
+                                <p>Status: {order.Status__c}</p>
+                                <p>Preparation Time: {order.formattedPrepTime}</p>
+                                <div class="timestamp">Order placed at: {order.Created_At__c}</div>
+                            </div>
                         </div>
-                    </div>
-                </template>
+                    </template>
+                </div>
             </div>
-        </div>
 
-        <!-- Served Orders -->
-        <div class="slds-col slds-size_1-of-4">
-            <div class="order-card served-order">
-                <template for:each={servedOrders} for:item="order">
-                    <div key={order.Id} class="card-header">
-                        <div class="table-number">Order #{order.OTID__c}</div>
-                        <div class="order-items">
-                            <p>Name: {order.First_Name__c} {order.Last_Name__c}</p>
-                            <p>Chef: {order.chefName}</p>
-                            <p>Total: ${order.Total__c}</p>
-                            <p>Status: {order.Status__c}</p>
-                            <p>Preparation Time: {order.formattedPrepTime}</p>
-                            <div class="timestamp">Order placed at: {order.Created_At__c}</div>
+            <!-- Served Orders Card -->
+            <div class="slds-col slds-size_1-of-4">
+                <div class="order-card served-order">
+                    <template for:each={servedOrders} for:item="order">
+                        <div key={order.Id} class="card-header">
+                            <div class="table-number">Order #{order.OTID__c}</div>
+                            <div class="order-items">
+                                <p>Name: {order.First_Name__c} {order.Last_Name__c}</p>
+                                <p>Chef: {order.chefName}</p>
+                                <p>Total: ${order.Total__c}</p>
+                                <p>Status: {order.Status__c}</p>
+                                <p>Preparation Time: {order.formattedPrepTime}</p>
+                                <div class="timestamp">Order placed at: {order.Created_At__c}</div>
+                            </div>
                         </div>
-                    </div>
-                </template>
+                    </template>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- Data Tables with Headings -->
+    <div class="mb-3">
+        <h3 class="header-with-background">New Orders</h3>
+        <lightning-datatable
+            data={newOrders}
+            columns={columns}
+            key-field="Id"
+            hide-checkbox-column
+            class="table-spacing"
+        ></lightning-datatable>
+    </div>
 
+    <div class="mb-3">
+        <h3 class="header-with-background">In Progress Orders</h3>
+        <lightning-datatable
+            data={inProgressOrders}
+            columns={columns}
+            key-field="Id"
+            hide-checkbox-column
+            class="table-spacing"
+        ></lightning-datatable>
+    </div>
 
-    <!-- Data Table for Orders -->
-    <lightning-datatable
-        data={newOrders}
-        columns={columns}
-        key-field="Id"
-        hide-checkbox-column
-    ></lightning-datatable>
+    <div class="mb-3">
+        <h3 class="header-with-background">Ready Orders</h3>
+        <lightning-datatable
+            data={readyOrders}
+            columns={columns}
+            key-field="Id"
+            hide-checkbox-column
+            class="table-spacing"
+        ></lightning-datatable>
+    </div>
 
-    <!-- Similar datatables for other statuses (inProgressOrders, readyOrders, servedOrders) -->
-    <lightning-datatable
-        data={inProgressOrders}
-        columns={columns}
-        key-field="Id"
-        hide-checkbox-column
-    ></lightning-datatable>
-
-    <lightning-datatable
-        data={readyOrders}
-        columns={columns}
-        key-field="Id"
-        hide-checkbox-column
-    ></lightning-datatable>
-
-    <lightning-datatable
-        data={servedOrders}
-        columns={columns}
-        key-field="Id"
-        hide-checkbox-column
-    ></lightning-datatable>
+    <div>
+        <h3 class="header-with-background">Served Orders</h3>
+        <lightning-datatable
+            data={servedOrders}
+            columns={columns}
+            key-field="Id"
+            hide-checkbox-column
+            class="table-spacing"
+        ></lightning-datatable>
+    </div>
 </template>
+

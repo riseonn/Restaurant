@@ -9,8 +9,8 @@ public with sharing class OrderManagementSystem {
                        Last_Name__c,
                        Total__c,
                        City__c,
-                       Content__c,
                        Country__c,
+                       Created_At__c,
                        CreatedById,
                        Discount__c,
                        Email__c,
@@ -31,19 +31,19 @@ public with sharing class OrderManagementSystem {
                        Sub_Total__c,
                        Tax__c,
                        Token__c,
+                       Updated_At__c,
                        User_Id__c,
-                       Vendor_Id__c,
-                       (SELECT Preparation_Time__c FROM Item_Chefs__r)
-                       FROM Order_Table__c
-                       WHERE Status__c IN ('New', 'Processing', 'Ready', 'Served')
-                       LIMIT 100
+                       Vendor_Id__c
+                FROM Order_Table__c
+                WHERE Status__c IN ('New', 'Processing', 'Ready', 'Served')
+                LIMIT 100
             ];
         } catch (Exception e) {
             throw new AuraHandledException('Error retrieving order data: ' + e.getMessage());
         }
     }
 
-    // Method to update a list of order records
+    // Method to update order records
     @AuraEnabled
     public static void updateOrder(List<Order_Table__c> orderList) {
         if (orderList == null || orderList.isEmpty()) {

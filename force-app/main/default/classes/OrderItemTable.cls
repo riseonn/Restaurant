@@ -15,7 +15,7 @@ public with sharing class OrderItemTable {
                    Name, 
                    OwnerId, 
                    Price__c, 
-                   Quantity__c, 
+ 
                    SKU__c, 
                    Unit__c, 
                    Updated_At__c

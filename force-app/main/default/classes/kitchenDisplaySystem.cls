@@ -6,34 +6,15 @@ public with sharing class kitchenDisplaySystem {
                 SELECT Id,
                        Last_Name__c,
                        Total__c,
-                       City__c,
-                       Content__c,
-                       Country__c,
-                       Created_At__c,   
-                       CreatedById,
-                       Discount__c,
                        Email__c,
                        First_Name__c,
-                       Grand_Total__c,
                        OTID__c,
-                       Item_Discount__c,
-                       LastModifiedById,
-                       Line_1__c,
-                       Line_2__c,
                        Middle_Name__c,
-                       Mobile__c,
-                       OwnerId,
-                       Promo__c,
-                       Province__c,
-                       Shipping__c,
+                       Order__c,
                        Status__c,
-                       Sub_Total__c,
-                       Tax__c,
-                       Token__c,
-                       User_Id__c,
-                       Vendor_Id__c,                       
-                       User_Id__r.First_Name__c,
-                       User_Id__r.Last_Name__c,
+                       OwnerId,
+                       Owner.FirstName,
+                       Owner.LastName,
                        Preparation_Time__r.Time_In_Minutes__c,   
                        Preparation_Time__r.Name
                 FROM Order_Table__c
@@ -45,7 +26,6 @@ public with sharing class kitchenDisplaySystem {
         }
     }
 
-    
     @AuraEnabled(cacheable=true)
     public static List<Preparation_Time__c> getPreparationTimes() {
         try {
@@ -72,7 +52,6 @@ public with sharing class kitchenDisplaySystem {
         }
     }
 
-    // Method to update a list of order records
     @AuraEnabled
     public static void updateOrder(List<Order_Table__c> orderList) {
         if (orderList == null || orderList.isEmpty()) {
@@ -86,7 +65,55 @@ public with sharing class kitchenDisplaySystem {
         }
     }
 
-    // Method to delete an order from the custom Order_Table__c object
+    @AuraEnabled
+    public static void claimOrder(Id orderId) {
+        try {
+            // Get the current user's ID
+            Id userId = UserInfo.getUserId();
+            
+            // Query the order
+            Order_Table__c order = [
+                SELECT Id, Status__c, OwnerId
+                FROM Order_Table__c 
+                WHERE Id = :orderId 
+                LIMIT 1
+            ];
+            
+            // Update the order with user ID and change status to Processing
+            order.Status__c = 'Processing';
+            order.OwnerId = userId;
+            
+            update order;
+        } catch (Exception e) {
+            throw new AuraHandledException('Failed to claim order: ' + e.getMessage());
+        }
+    }
+
+    @AuraEnabled
+    public static void unclaimOrder(Id orderId) {
+        try {
+            // Get the current user's ID
+            Id defaultOwnerId = UserInfo.getUserId();
+
+            // Query the order
+            Order_Table__c order = [
+                SELECT Id, Status__c, OwnerId
+                FROM Order_Table__c
+                WHERE Id = :orderId
+                LIMIT 1
+            ];
+
+            // Remove user assignment and change status to 'New'
+
+            order.Status__c = 'New';
+
+            // Update the order
+            update order;
+        } catch (Exception e) {
+            throw new AuraHandledException('Failed to unclaim order: ' + e.getMessage());
+        }
+    }
+
     @AuraEnabled
     public static void deleteOrder(Id orderId) {
         if (orderId == null) {
@@ -108,6 +135,28 @@ public with sharing class kitchenDisplaySystem {
             }
         } catch (Exception e) {
             throw new AuraHandledException('Failed to delete order: ' + e.getMessage());
+        }
+    }
+
+    public static void notifyNewOrders(List<Id> orderIds) {
+        // Logic to handle new orders notification
+        System.debug('New Orders ID: ' + orderIds);
+        
+        // Further logic for notifying the kitchen system (email, platform event, etc.)
+    }
+
+    public static void handleNewOrders(List<Order_Table__c> orders) {
+        // Get the list of IDs for new orders
+        List<Id> newOrderIds = new List<Id>();
+        for (Order_Table__c order : orders) {
+            if (order.Status__c == 'New') {
+                newOrderIds.add(order.Id);
+            }
+        }
+
+        // Call the method to notify the kitchen display system
+        if (!newOrderIds.isEmpty()) {
+            notifyNewOrders(newOrderIds);
         }
     }
 }
